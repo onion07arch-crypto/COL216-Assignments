@@ -44,7 +44,7 @@ int main(int argc, char* argv[]) {
     }
 
     cpu.dumpArchitecturalState();
-    for (int i=0;i<cpu.Memory.size();i++) {
+    for (std::size_t i=0;i<cpu.Memory.size();i++) {
         cout << cpu.Memory[i] << " ";
     }
     cout << endl;
