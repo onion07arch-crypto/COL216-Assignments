@@ -1,55 +1,16 @@
 #pragma once
-#include <iostream>
 #include <string>
 
 enum class OpCode { ADD, SUB, ADDI, MUL, DIV, REM, LW, SW, BEQ, BNE, BLT, BLE, J, SLT, SLTI, AND, OR, XOR, ANDI, ORI, XORI };
 enum class UnitType { ADDER, MULTIPLIER, DIVIDER, LOADSTORE, BRANCH, LOGIC };
 
-//for debugging
-inline std::string to_string(OpCode op) {
-    switch (op) {
-        case OpCode::ADD: return "ADD";
-        case OpCode::SUB: return "SUB";
-        case OpCode::ADDI: return "ADDI";
-        case OpCode::MUL: return "MUL";
-        case OpCode::DIV: return "DIV";
-        case OpCode::REM: return "REM";
-        case OpCode::LW: return "LW";
-        case OpCode::SW: return "SW";
-        case OpCode::BEQ: return "BEQ";
-        case OpCode::BNE: return "BNE";
-        case OpCode::BLT: return "BLT";
-        case OpCode::BLE: return "BLE";
-        case OpCode::J: return "J";
-        case OpCode::SLT: return "SLT";
-        case OpCode::SLTI: return "SLTI";
-        case OpCode::AND: return "AND";
-        case OpCode::OR: return "OR";
-        case OpCode::XOR: return "XOR";
-        case OpCode::ANDI: return "ANDI";
-        case OpCode::ORI: return "ORI";
-        case OpCode::XORI: return "XORI";
-    }
-    return "UNKNOWN";
-}
-
 struct Instruction {
     OpCode op;
-    int dest;
-    int src1;
-    int src2;
-    int imm;
-    int pc;
-
-    //for debugging
-    void printInstr(){
-        std::cout<<"Opcode: "<<to_string(op)<<std::endl;
-        std::cout<<"Dest: "<<dest<<std::endl;
-        std::cout<<"Src1: "<<src1<<std::endl;
-        std::cout<<"Src2: "<<src2<<std::endl;
-        std::cout<<"Imm: "<<imm<<std::endl;
-        std::cout<<"PC: "<<pc<<std::endl;    
-    }
+    int dest = 0;
+    int src1 = 0;
+    int src2 = 0;
+    int imm = 0;
+    int pc = 0;
 };
 
 struct ProcessorConfig {
@@ -72,11 +33,42 @@ struct ProcessorConfig {
 };
 
 struct ROBEntry {
-    // valid bit, ready bit, architectural register ID
-    // other fields as required
+    bool valid = false;
+    bool ready = false;
+    int dest_arch_reg = -1;
+    int value = 0;
+    bool exception = false;
+    OpCode op;
+    int pc = 0;
+
+    // For stores
+    bool is_store = false;
+    int mem_addr = 0;
+    int store_value = 0;
+
+    // For loads
+    bool is_load = false;
+
+    // For branches
+    bool is_branch = false;
+    int predicted_target = 0;
+    int actual_target = 0;
+    bool branch_taken = false;
+
+    // For jumps (unconditional)
+    bool is_jump = false;
 };
 
 struct RSEntry {
-    // value, tag, ready ... for both operands
-    // other fields as required
+    bool busy = false;
+    bool executing = false;  // in pipeline, not yet complete
+    OpCode op;
+    int Vj = 0;
+    int Vk = 0;
+    int Qj = -1;    // -1 means value is ready
+    int Qk = -1;
+    int dest_rob_tag = -1;
+    int imm = 0;
+    int pc = 0;
+    int dispatch_cycle = 0;  // for ordering (oldest first)
 };

@@ -1,3 +1,4 @@
+#include <cstddef>
 #include <iostream>
 #include <string>
 #include "Processor.h"
@@ -34,13 +35,11 @@ int main(int argc, char* argv[]) {
         }
     }
 
-    if (max_cycles == -1) {
-        if (cpu.exception) {
-            cout << "\n[+] Execution halted due to exception after " << cpu.clock_cycle << " cycles.\n";
-        }
-        else {
-            cout << "\n[+] Execution complete naturally in " << cpu.clock_cycle << " cycles.\n";
-        }
+    if (cpu.exception) {
+        cout << "\n[+] Execution halted due to exception after " << cpu.clock_cycle << " cycles.\n";
+    }
+    else {
+        cout << "\n[+] Execution complete naturally in " << cpu.clock_cycle << " cycles.\n";
     }
 
     cpu.dumpArchitecturalState();
