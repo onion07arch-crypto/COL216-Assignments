@@ -1,0 +1,11 @@
+addi 1 0 0 1
+addi 2 0 0 2
+add 4 2 1 0
+add 5 2 1 0
+sub 3 4 5 0
+div 3 2 1 0
+div 6 2 3 0
+div 3 1 2 0
+div 6 2 3 0
+addi 3 4 0 3
+sub 6 4 5 0
