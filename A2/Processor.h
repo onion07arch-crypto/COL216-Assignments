@@ -165,12 +165,10 @@ public:
 
         // Determine target unit and check RS availability
         ExecutionUnit* target_unit = nullptr;
-        bool use_lsq = false;
         bool is_jump = (op == OpCode::J);
 
         if (!is_jump) {
             if (op == OpCode::LW || op == OpCode::SW) {
-                use_lsq = true;
                 if (lsq.isFull()) return;  // stall
             } else if (op == OpCode::ADD || op == OpCode::SUB || op == OpCode::ADDI || op == OpCode::SLT || op == OpCode::SLTI) {
                 target_unit = &units[0];
