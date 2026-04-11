@@ -129,9 +129,7 @@ public:
         }
     }
 
-    // ============================================================
     // FETCH STAGE
-    // ============================================================
     void stageFetch() {
         if (halted) return;
         if (fetch_buffer_valid) return;  // previous fetch not yet consumed
@@ -154,9 +152,7 @@ public:
         }
     }
 
-    // ============================================================
     // DECODE / DISPATCH STAGE
-    // ============================================================
     void stageDecode() {
         if (!fetch_buffer_valid) return;
         if (halted) return;
@@ -335,9 +331,7 @@ public:
         }
     }
 
-    // ============================================================
     // EXECUTE AND BROADCAST STAGE
-    // ============================================================
     void stageExecuteAndBroadcast() {
         if (halted) return;
 
@@ -418,9 +412,7 @@ public:
         lsq.capture(tag, val);
     }
 
-    // ============================================================
     // COMMIT STAGE
-    // ============================================================
     void stageCommit() {
         if (rob_count == 0) return;
 
@@ -485,9 +477,7 @@ public:
         rob_count--;
     }
 
-    // ============================================================
     // FLUSH
-    // ============================================================
     void flushPipeline() {
         // Clear all RS, pipelines, fetch buffer
         for (auto& unit : units) unit.flush();
@@ -517,9 +507,7 @@ public:
         }
     }
 
-    // ============================================================
     // STEP (one cycle)
-    // ============================================================
     bool step() {
         clock_cycle++;
         flushed_this_cycle = false;
@@ -547,9 +535,7 @@ public:
         return true;
     }
 
-    // ============================================================
     // OUTPUT
-    // ============================================================
     void dumpArchitecturalState() {
         std::cout << "\n=== ARCHITECTURAL STATE (CYCLE " << clock_cycle << ") ===" << std::endl;
         for (int i = 0; i < (int)ARF.size(); i++) {
