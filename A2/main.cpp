@@ -1,4 +1,3 @@
-#include <cstddef>
 #include <iostream>
 #include <string>
 #include "Processor.h"
@@ -35,15 +34,17 @@ int main(int argc, char* argv[]) {
         }
     }
 
-    if (cpu.exception) {
-        cout << "\n[+] Execution halted due to exception after " << cpu.clock_cycle << " cycles.\n";
-    }
-    else {
-        cout << "\n[+] Execution complete naturally in " << cpu.clock_cycle << " cycles.\n";
+    if (max_cycles == -1) {
+        if (cpu.exception) {
+            cout << "\n[+] Execution halted due to exception after " << cpu.clock_cycle << " cycles.\n";
+        }
+        else {
+            cout << "\n[+] Execution complete naturally in " << cpu.clock_cycle << " cycles.\n";
+        }
     }
 
     cpu.dumpArchitecturalState();
-    for (std::size_t i=0;i<cpu.Memory.size();i++) {
+    for (int i=0;i<(int)cpu.Memory.size();i++) {
         cout << cpu.Memory[i] << " ";
     }
     cout << endl;
