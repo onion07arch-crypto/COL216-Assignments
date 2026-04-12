@@ -158,7 +158,7 @@ def parse_mem_operand(s, memory_labels):
     Parse memory operand like 'A(x1)' or '0(x1)'.
     Returns (base_reg_num, offset).
     """
-    match = re.match(r'(\w+)\((\w+)\)', s)
+    match = re.match(r'(-?\w+)\((\w+)\)', s)
     if not match:
         raise ValueError(f"Cannot parse memory operand: {s}")
     label_or_offset = match.group(1)
